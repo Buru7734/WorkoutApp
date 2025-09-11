@@ -1,11 +1,13 @@
 const express = require("express");
 const db = require("./db/connections.js");
-const authRouter = require("./controllers/auth.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const isSignedIn = require("./middleware/is-sign-in.js");
-
+const passUserToView = require("./middleware/pass-user-to-view.js");
 const app = express();
+
+const authRouter = require("./controllers/auth.js");
+const workoutsRouter = require("./controllers/workouts.js");
 
 app.use(
   session({
@@ -17,21 +19,24 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+
+app.use(passUserToView);
 app.use("/auth", authRouter);
 
 app.get("/", (req, res) => {
-  res.render("index.ejs", {
-    user: req.session.user,
-  });
+  if (req.session.user) {
+    res.redirect("/workouts");
+  } else {
+    res.render("index.ejs");
+  }
 });
 
-app.get("/vip", isSignedIn, (req, res) => {
-  if (req.session.user) return res.send("You've got access");
-  res.send("You don't have access, please authenticate");
-  console.log(req.session.user);
-});
+app.use(isSignedIn);
+
+app.use("/workouts", workoutsRouter);
 
 db.on("connected", () => {
+  console.clear();
   console.log("Connected to MongoDb");
   app.listen(3000, (req, res) => {
     console.log("Listening Port 3000");

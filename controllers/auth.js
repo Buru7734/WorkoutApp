@@ -18,7 +18,7 @@ router.get("/sign-out", (req, res) => {
 });
 
 router.post("/sign-up", async (req, res) => {
-  let { username, password, confirmPassword } = req.body;
+  let { username, email, password, confirmPassword } = req.body;
   console.log(req.body);
 
   //Check if usr exist
@@ -35,7 +35,7 @@ router.post("/sign-up", async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
   password = hashedPassword;
 
-  const user = await User.create({ username, password });
+  const user = await User.create({ username, email, password });
   res.status(200).redirect("/auth/sign-in");
 });
 
@@ -58,6 +58,7 @@ router.post("/sign-in", async (req, res) => {
   req.session.save(() => {
     res.redirect("/");
   });
+  // console.log(req.session.user._id);
 });
 
 module.exports = router;

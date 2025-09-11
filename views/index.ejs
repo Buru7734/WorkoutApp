@@ -10,7 +10,10 @@
 
     <% if (user) {%>
     <p>Welcome to the app, <%= user.username %>!</p>
+    <a href="/workouts/index">Workouts</a>
+    <a href="">Goals</a>
     <a href="/auth/sign-out">Sign out</a>
+
     <% } else {%>
     <p>Welcome to the app, guest</p>
     <p>
