@@ -4,6 +4,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const isSignedIn = require("./middleware/is-sign-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
+const methodOverride = require("method-override");
 const app = express();
 
 const authRouter = require("./controllers/auth.js");
@@ -19,6 +20,7 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
 
 app.use(passUserToView);
 app.use("/auth", authRouter);

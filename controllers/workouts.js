@@ -13,27 +13,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/index", async (req, res) => {
-//   const user = await User.findById(req.session.user._id);
-//   res.render("workouts/index.ejs", { user: { workOuts: user.workOuts } });
-// });
-
 router.get("/new", (req, res) => {
-  //   const user = req.session.user;
   res.render("workouts/new.ejs"); //, { user }
 });
-
-// router.get("/show", (req, res) => {
-//   res.render("/workouts/show.ejs");
-// });
 
 router.get("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
+  //   console.log("Show Page, workout: ", workout);
   res.render("workouts/show.ejs", { user, workout });
-  //   const { name, sets, reps, weight } = req.body;
+});
 
-  //   console.log(name);
+router.get("/:id/edit", async (req, res) => {
+  const user = await User.findById(req.session.user._id);
+  const workout = user.workOuts.id(req.params.id);
+  res.render("workouts/edit.ejs", { user, workout });
+  //   console.log(workout.title);
 });
 
 router.post("/", async (req, res) => {
@@ -47,6 +42,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/:id", async (req, res) => {
+  console.log("I am making a POST request to Exercises");
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
   workout.exercise.push(req.body);
@@ -54,6 +50,40 @@ router.post("/:id", async (req, res) => {
   await user.save();
 
   res.redirect(`/workouts/${workout._id}`);
+  console.log(workout._id);
+});
+
+router.put("/:workoutId/edit", async (req, res) => {
+  const user = await User.findById(req.session.user._id);
+  const workout = user.workOuts.id(req.params.id);
+
+  res.redirect(`/workouts/${req.params.workoutId}`);
+});
+
+router.put("/:id", async (req, res) => {
+  const user = await User.findById(req.session.user._id);
+  const workout = user.workOuts.id(req.params.id);
+  workout.title = req.body.title;
+  await user.save();
+  res.redirect("/workouts");
+});
+
+router.delete("/:id", async (req, res) => {
+  const user = await User.findById(req.session.user._id);
+  const workout = user.workOuts.id(req.params.id);
+  console.log("Deleting workout: ", workout);
+  workout.deleteOne();
+  await user.save();
+  res.redirect(`/workouts`);
+});
+
+router.delete("/:workoutId/exercises/:exerciseId", async (req, res) => {
+  const user = await User.findById(req.session.user._id);
+  const workout = user.workOuts.id(req.params.workoutId);
+  const exercise = workout.exercise.id(req.params.exerciseId);
+  exercise.deleteOne();
+  await user.save();
+  res.redirect(`/workouts/${req.params.workoutId}`);
 });
 
 module.exports = router;

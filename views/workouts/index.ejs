@@ -9,9 +9,16 @@
   <body>
     <h1>Workouts</h1>
     <h2>Your workouts:</h2>
+    <% if (workOuts.length === 0){ %>
+    <p>You have no Workouts You are weak!</p>
+
+    <%}%>
     <ul>
       <% workOuts.forEach(workout => { %>
-      <li><a href="/workouts/<%= workout._id%>"> <%= workout.title%></a></li>
+      <li>
+        <a href="/workouts/<%= workout._id%>"> <%= workout.title%></a
+        ><a href="/workouts/<%= workout._id%>/edit">Edit</a>
+      </li>
       <% }) %>
     </ul>
 

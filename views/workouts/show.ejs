@@ -8,23 +8,49 @@
   <%- include('../partials/_navbar.ejs') %>
   <body>
     <h1><%= workout.title %></h1>
+    <form
+      action="/workouts/<%= workout._id %>/exercises/<%= workout.exercise._id%>"
+      method="POST"
+    >
+      <button type="submit">Delete Workout</button>
+    </form>
     <p>Exercises:</p>
 
     <% workout.exercise.forEach((ex) => { %>
-    <p><%= ex.name %></p>
+    <div>
+      <p>
+        <a href="">
+          Name:<%= ex.name %> Sets: <%= ex.sets %> Reps:<%= ex.reps%> Weight:<%=
+          ex.weight %></a
+        >
+      </p>
+      <form
+        action="/workouts/<%= workout._id %>/exercises/<%= ex._id %>?_method=PUT"
+        method="POST"
+      >
+        <button data-id="<%= ex._id %>">Edit</button>
+      </form>
+      <form
+        action="/workouts/<%= workout._id %>/exercises/<%= ex._id%>?_method=DELETE"
+        method="POST"
+      >
+        <button type="submit">Delete Exercise</button>
+      </form>
+    </div>
+
     <% }) %>
 
     <button type="submit">Add exercise</button>
 
-    <form action="/workouts/<%= workout._id%>" method="POST">
-      <label for="name"> 1 Name</label>
-      <input type="text" name="name" id="name" />
-      <label for="sets"> Sets</label
-      ><input type="number" name="sets" id="sets" />
-      <label for="reps"> reps</label
-      ><input type="number" name="reps" id="reps" />
-      <label for="weight"> Weight</label
-      ><input type="number" name="weight" id="weight" />
+    <form action="/workouts/<%= workout._id %>" method="POST">
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" required />
+      <label for="sets"> Sets</label>
+      <input type="number" name="sets" id="sets" required />
+      <label for="reps"> reps</label>
+      <input type="number" name="reps" id="reps" required />
+      <label for="weight"> Weight</label>
+      <input type="number" name="weight" id="weight" required />
       <button type="submit">submit</button>
     </form>
   </body>
