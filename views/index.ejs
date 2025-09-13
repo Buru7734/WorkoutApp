@@ -8,18 +8,112 @@
   <body>
     <h1>Welcome</h1>
 
-    <% if (user) {%>
-    <p>Welcome to the app, <%= user.username %>!</p>
-    <a href="/workouts/index">Workouts</a>
-    <a href="">Goals</a>
-    <a href="/auth/sign-out">Sign out</a>
-
-    <% } else {%>
-    <p>Welcome to the app, guest</p>
-    <p>
-      <a href="/auth/sign-up">Sign up</a> or
-      <a href="/auth/sign-in">Sign in</a>
-    </p>
+    <% if (user) { %>
+    <p class="welcome-text">Welcome to the app, <%= user.username %>!</p>
+    <div class="links">
+      <a href="/workouts/index" class="btn btn-primary">🏋️ Workouts</a>
+      <a href="" class="btn btn-success">🎯 Goals</a>
+      <a href="/auth/sign-out" class="btn btn-danger">🚪 Sign out</a>
+    </div>
+    <% } else { %>
+    <p class="welcome-text">Welcome to the app, guest</p>
+    <div class="links">
+      <a href="/auth/sign-up" class="btn btn-primary">Sign up</a>
+      <a href="/auth/sign-in" class="btn btn-secondary">Sign in</a>
+    </div>
     <% } %>
   </body>
+
+  <style>
+    /* Reset / Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #d9e6f2);
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      text-align: center;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a2a2a;
+    }
+
+    .welcome-text {
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      color: #444;
+    }
+
+    /* Links/Buttons */
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    a.btn {
+      display: inline-block;
+      padding: 0.7rem 1.4rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    a.btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    a.btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Color Variants */
+    .btn-primary {
+      background: linear-gradient(135deg, #008cba, #0079a1);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #28a745, #218838);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .links {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      a.btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
 </html>

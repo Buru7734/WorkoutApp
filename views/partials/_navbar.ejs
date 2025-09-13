@@ -1,5 +1,6 @@
 <nav>
   <a href="/">Home</a>
+  <a href="/goals">Goals</a>
   <% if(user) {%>
   <a href="/workouts">Workouts</a>
   <a href="/auth/sign-out">Sign Out</a>
@@ -9,3 +10,51 @@
 
   <% } %>
 </nav>
+<style>
+  /* Navbar Styles */
+  nav {
+    display: flex;
+    justify-content: center; /* center links horizontally */
+    align-items: center;
+    background-color: #008cba;
+    padding: 15px 20px;
+    gap: 20px; /* space between links */
+    flex-wrap: wrap; /* wrap links on small screens */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background 0.3s ease, transform 0.1s ease;
+  }
+
+  nav a:hover {
+    background-color: #0079a1;
+    transform: scale(1.05);
+  }
+
+  nav a:active {
+    transform: scale(0.95);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    nav {
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px 15px;
+    }
+
+    nav a {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

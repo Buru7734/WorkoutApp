@@ -7,11 +7,102 @@
   </head>
   <%- include('../partials/_navbar.ejs') %>
   <body>
-    <h1>Add Workout!</h1>
-    <form action="/workouts" method="POST">
-      <label for="">Workout:</label>
-      <input type="text" name="title" id="title" required />
-      <button type="submit">Submit</button>
-    </form>
+    <main>
+      <h1>Add Workout!</h1>
+      <form action="/workouts" method="POST">
+        <label for="">Workout:</label>
+        <input type="text" name="title" id="title" required />
+        <button type="submit">Submit</button>
+      </form>
+    </main>
   </body>
+  <style>
+    /* Reset / Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a2a2a;
+      text-align: center;
+    }
+
+    /* Form Container */
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Labels and Inputs */
+    form label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #fafafa;
+      color: #333;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #008cba;
+    }
+
+    /* Submit Button */
+    form button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #008cba;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    form button:hover {
+      background: #0079a1;
+    }
+
+    form button:active {
+      transform: scale(0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      form {
+        padding: 15px;
+      }
+
+      form button {
+        width: 100%;
+      }
+    }
+  </style>
 </html>

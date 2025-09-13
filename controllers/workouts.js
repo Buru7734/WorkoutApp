@@ -3,6 +3,7 @@ const router = express.Router();
 
 const User = require("../models/user");
 
+//Displays Workouts
 router.get("/", async (req, res) => {
   try {
     const user = await User.findById(req.session.user._id);
@@ -13,24 +14,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+//Displays Adding Workout
 router.get("/new", (req, res) => {
   res.render("workouts/new.ejs"); //, { user }
 });
 
+//Displays Exercises
 router.get("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
-  //   console.log("Show Page, workout: ", workout);
   res.render("workouts/show.ejs", { user, workout });
 });
 
+//Displays to edit Workout
 router.get("/:id/edit", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
   res.render("workouts/edit.ejs", { user, workout });
-  //   console.log(workout.title);
 });
 
+//Creating a workout
 router.post("/", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const newWorkout = {
@@ -41,8 +44,8 @@ router.post("/", async (req, res) => {
   res.redirect("/workouts");
 });
 
+//Creating a exercise
 router.post("/:id", async (req, res) => {
-  console.log("I am making a POST request to Exercises");
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
   workout.exercise.push(req.body);
@@ -50,16 +53,25 @@ router.post("/:id", async (req, res) => {
   await user.save();
 
   res.redirect(`/workouts/${workout._id}`);
-  console.log(workout._id);
 });
 
-router.put("/:workoutId/edit", async (req, res) => {
+//Edit a exercise
+router.put("/:workoutId/exercises/:exerciseId", async (req, res) => {
   const user = await User.findById(req.session.user._id);
-  const workout = user.workOuts.id(req.params.id);
+  const workout = user.workOuts.id(req.params.workoutId);
+  const exercise = workout.exercise.id(req.params.exerciseId);
+
+  const { name, sets, reps, weight } = req.body;
+  exercise.name = req.body.name;
+  exercise.sets = req.body.sets;
+  exercise.reps = req.body.reps;
+  exercise.weight = req.body.weight;
+  await user.save();
 
   res.redirect(`/workouts/${req.params.workoutId}`);
 });
 
+//Edit a workout
 router.put("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
@@ -68,15 +80,17 @@ router.put("/:id", async (req, res) => {
   res.redirect("/workouts");
 });
 
+//Delete a Workout
 router.delete("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
-  console.log("Deleting workout: ", workout);
+
   workout.deleteOne();
   await user.save();
   res.redirect(`/workouts`);
 });
 
+//Delete an exercise
 router.delete("/:workoutId/exercises/:exerciseId", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.workoutId);

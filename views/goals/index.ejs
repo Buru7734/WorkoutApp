@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goals</title>
+  </head>
+  <%- include('../partials/_navbar.ejs') %>
+  <body>
+    <h1>Goals</h1>
+    <form action="/goals" method="POST">
+      <label for="goals">What is you goal:</label>
+      <select id="goals" name="goals">
+        <option></option>
+        <option value="GetVeryTasty">Get Very Tasty</option>
+        <option value="BeHealthy">Be Healthy</option>
+        <option value="GainMuscle">Gain Muscle</option>
+        <option value="LooseWeight">Loose Weight</option>
+      </select>
+      <button type="submit" id="goalBtn">Save Goal</button>
+    </form>
+
+    <ul>
+      <% if (user.goals.length === 0){ %>
+      <h2>You have no Goals, You Pussy!</h2>
+
+      <%} user.goals.forEach(goal => {%>
+      <li><%= goal.goals %></li>
+      <form action="/goals/<%= goal._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+      <% }) %>
+    </ul>
+    <% if (user.goals.length > 0 && user.goals[0].goals === "GetVeryTasty") { %>
+    <p>You choose wisely!</p>
+    <img src="https://media.tenor.com/lb7h3IUXZmkAAAAM/desu01.gif" alt="" />
+    <% } else if (user.goals.length > 0 && user.goals[0].goals === "BeHealthy")
+    { %>
+    <p>Oh you fancy pants!</p>
+    <img src="https://media.tenor.com/fzEzmZf3eTIAAAAM/omg-shy.gif" alt="" />
+    <% } else if (user.goals.length > 0 && user.goals[0].goals === "GainMuscle")
+    { %>
+    <p>Now You Talking!</p>
+    <img
+      src="https://media.tenor.com/jm3Rac5keU8AAAAM/johnny-bravo-muscles.gif"
+      alt=""
+    />
+    <% } else if (user.goals.length > 0 && user.goals[0].goals ===
+    "LooseWeight") { %>
+    <p>Aw that's cute!</p>
+    <img
+      src="https://media.tenor.com/hhOGgrfysK8AAAAM/i-cant-lose-weight-eric-cartman.gif"
+    />
+    <% } %>
+  </body>
+  <style>
+    .hide {
+      display: none;
+    }
+  </style>
+  <script>
+
+    const user = <%- JSON.stringify(user) %>;
+    const goalBtn = document.getElementById("goalBtn");
+
+    goalBtn.addEventListener("click", (e) => {
+      if (user.goals.length){
+      e.preventDefault();
+      goalBtn.classList.toggle("hide")
+      goalBtn.style.color = "blue"}
+    })
+  </script>
+  <style>
+    /* Reset / Base Styles */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a2a2a;
+      text-align: center;
+    }
+
+    /* Form Styles */
+
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #555;
+    }
+
+    form select {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: #fafafa;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    form select:focus {
+      outline: none;
+      border-color: #008cba;
+    }
+
+    button#goalBtn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: #008cba;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    button#goalBtn:hover {
+      background: #0079a1;
+    }
+
+    button#goalBtn:active {
+      transform: scale(0.98);
+    }
+
+    /* Hide class */
+
+    .hide {
+      display: none !important;
+    }
+
+    /* List & Goals Display */
+
+    ul {
+      list-style: none;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
+    ul li {
+      background: white;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border-left: 6px solid #008cba;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    ul li form {
+      margin: 0;
+    }
+
+    ul li form button {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    ul li form button:hover {
+      background: #c0392b;
+    }
+
+    /* Messages & Images */
+
+    h2,
+    p {
+      text-align: center;
+      margin: 20px 0;
+      color: #555;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 10px auto 30px auto;
+      clip-path: circle(50%);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 600px) {
+      form,
+      ul {
+        padding: 0 15px;
+      }
+
+      button#goalBtn {
+        width: 100%;
+      }
+
+      ul li {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      ul li form button {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</html>

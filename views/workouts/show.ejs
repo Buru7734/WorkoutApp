@@ -8,10 +8,7 @@
   <%- include('../partials/_navbar.ejs') %>
   <body>
     <h1><%= workout.title %></h1>
-    <form
-      action="/workouts/<%= workout._id %>/exercises/<%= workout.exercise._id%>"
-      method="POST"
-    >
+    <form action="/workouts/<%= workout._id %>?_method=DELETE" method="POST">
       <button type="submit">Delete Workout</button>
     </form>
     <p>Exercises:</p>
@@ -24,12 +21,9 @@
           ex.weight %></a
         >
       </p>
-      <form
-        action="/workouts/<%= workout._id %>/exercises/<%= ex._id %>?_method=PUT"
-        method="POST"
-      >
-        <button data-id="<%= ex._id %>">Edit</button>
-      </form>
+
+      <button id="myBtn-<%= ex._id%>" type="button">Edit</button>
+
       <form
         action="/workouts/<%= workout._id %>/exercises/<%= ex._id%>?_method=DELETE"
         method="POST"
@@ -40,9 +34,9 @@
 
     <% }) %>
 
-    <button type="submit">Add exercise</button>
+    <button type="submit" id="addBtn">Add exercise</button>
 
-    <form action="/workouts/<%= workout._id %>" method="POST">
+    <form action="/workouts/<%= workout._id %>" method="POST" id="form">
       <label for="name">Name</label>
       <input type="text" name="name" id="name" required />
       <label for="sets"> Sets</label>
@@ -51,7 +45,244 @@
       <input type="number" name="reps" id="reps" required />
       <label for="weight"> Weight</label>
       <input type="number" name="weight" id="weight" required />
-      <button type="submit">submit</button>
+      <button type="submit" id="submitBtn">submit</button>
     </form>
+
+    <% workout.exercise.forEach((ex) => { %>
+    <div id="myModal-<%= ex._id %>" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <form
+          action="/workouts/<%= workout._id %>/exercises/<%= ex._id%>?_method=PUT"
+          method="POST"
+        >
+          <label for="name-<%= ex._id %>">Name</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="<%= ex.name %>"
+            required
+          />
+
+          <label for="sets-<%= ex._id %>">Sets</label>
+          <input
+            type="number"
+            name="sets"
+            id="sets"
+            placeholder="<%= ex.sets %>"
+            required
+          />
+
+          <label for="reps-<%= ex._id %>">Reps</label>
+          <input
+            type="number"
+            name="reps"
+            id="reps"
+            placeholder="<%= ex.reps %>"
+            required
+          />
+
+          <label for="weight-<%= ex._id %>">Weight</label>
+          <input
+            type="number"
+            name="weight"
+            id="weight"
+            placeholder="<%= ex.weight %>"
+            required
+          />
+
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <% }) %>
   </body>
+
+  <style>
+    /* Reset / Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a2a2a;
+      text-align: center;
+    }
+
+    /* Form Container */
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Labels and Inputs */
+    form label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #fafafa;
+      color: #333;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #008cba;
+    }
+
+    /* Submit Button */
+    form button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #008cba;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    form button:hover {
+      background: #0079a1;
+    }
+
+    form button:active {
+      transform: scale(0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      form {
+        padding: 15px;
+      }
+
+      form button {
+        width: 100%;
+      }
+    }
+    .hide {
+      display: none;
+    }
+    /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 1; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0, 0, 0); /* Fallback color */
+      background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%; /* Could be more or less, depending on screen size */
+    }
+
+    /* The Close Button */
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    const workout = <%- JSON.stringify(workout) %>;
+    const form = document.getElementById("form");
+
+
+
+         workout.exercise.forEach((ex) => {
+        // Get the modal
+        var modal = document.getElementById(`myModal-${ex._id}`);
+
+        // Get the button that opens the modal
+        var btn = document.getElementById(`myBtn-${ex._id}`);
+
+        // Get the <span> element that closes the modal
+        var span = modal.getElementsByClassName("close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+          modal.style.display = "block";
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+          modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.addEventListener("click", (event) => {
+            if (event.target === modal){
+                modal.style.display = "none"
+            }
+        })
+
+        form.style.display = "none";
+    })
+
+
+    const addBtn = document.getElementById("addBtn");
+    addBtn.addEventListener("click", () => {
+        form.style.display = "block";
+    });
+
+    const exerciseForm = document.querySelector("#submitBtn")
+    const exerciseBtn = document.querySelector("#addBtn")
+    console.log("Form: ", exerciseForm)
+    console.log("Btn: ", exerciseBtn)
+
+    if (!workout.exercise.length) {
+        exerciseBtn.classList.toggle("hide")
+    }
+
+    exerciseForm.addEventListener("click", (e) => {
+
+        exerciseBtn.classList.toggle("hide")
+    })
+  </script>
 </html>

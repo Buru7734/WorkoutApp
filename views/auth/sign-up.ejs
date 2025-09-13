@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up</title>
   </head>
+  <%- include('../partials/_navbar.ejs') %>
   <body>
     <h1>Create a new account!</h1>
     <form action="/auth/sign-up" method="POST">
@@ -18,5 +19,126 @@
       <input type="password" name="confirmPassword" id="confirmPassword" />
       <button type="submit">Sign up</button>
     </form>
+ <% schemas.forEach((schema) => {%>
+  <% if (schema.username === userCheck){ %>
+   <p class="popup">User already exists, try another</p>
+  <% } %>
+<% }) %>
+<%if (password !== confirmPassword ){%>
+<p class="popup">Passwords Don't Match</p>
+<%}%>
+
   </body>
+  <style>
+        /* Pop-up message style */
+.popup {
+  position: fixed;      /* Always on top */
+  top: 20px;            /* Distance from top */
+  left: 50%;            /* Center horizontally */
+  transform: translateX(-50%);
+  background: #ff4d4f;  /* Red background */
+  color: white;         /* White text */
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  font-weight: bold;
+  z-index: 1000;
+  animation: fadeOut 5s forwards;  /* Fade out after 3s */
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+
+    /* Reset / Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2a2a2a;
+      text-align: center;
+    }
+
+    /* Form Container */
+    form {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 20px auto;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Labels and Inputs */
+    form label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    form input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      background: #fafafa;
+      color: #333;
+    }
+
+    form input:focus {
+      outline: none;
+      border-color: #008cba;
+    }
+
+    /* Submit Button */
+    form button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background: #008cba;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.1s ease;
+    }
+
+    form button:hover {
+      background: #0079a1;
+    }
+
+    form button:active {
+      transform: scale(0.98);
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      form {
+        padding: 15px;
+      }
+
+      form button {
+        width: 100%;
+      }
+    }
+  </style>
 </html>
