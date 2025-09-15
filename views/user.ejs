@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+         <style>
+        /* Reset / Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e6f2);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Headings */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2a2a2a;
+        }
+
+        /* Form and Button */
+        form {
+            margin-top: 2rem;
+        }
+
+        button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            font-weight: bold;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+
+        /* Links/Buttons */
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 0.7rem 1.4rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        a.btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        a.btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Color Variants */
+        .btn-primary {
+            background: linear-gradient(135deg, #008cba, #0079a1);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .links {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            a.btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            button {
+                width: 100%;
+                font-size: 1.1rem;
+                padding: 0.9rem;
+            }
+        }
+    
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+ <%- include('./partials/_navbar.ejs') %>
+<body>
+    <h1>Account</h1>
+    <form action="/user/<%user._id%>?_method=DELETE" method="POST">
+    <button type="submit">Delete Account</button></form>
+</body>
+</html>

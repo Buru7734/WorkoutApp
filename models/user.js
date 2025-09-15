@@ -1,8 +1,15 @@
 const mongoose = require("mongoose");
 
+const daysSchema = new mongoose.Schema({
+  days: {type: String, required: true},
+})
+
 const goalsSchema = new mongoose.Schema({
   goals: { type: String, required: true },
+  days : [daysSchema]
 });
+
+
 
 //Exercise
 const exerciseSchema = new mongoose.Schema({

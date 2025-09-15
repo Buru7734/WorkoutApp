@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     res.render("workouts/index.ejs", { user, workOuts: user.workOuts });
   } catch (error) {
     console.log(error);
-    res.redirect("/");
+    res.redirect("/workouts");
   }
 });
 
@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
   };
   user.workOuts.push(newWorkout);
   await user.save();
-  res.redirect("/workouts");
+  res.redirect("/");
 });
 
 //Creating a exercise

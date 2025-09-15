@@ -10,6 +10,8 @@ const app = express();
 const authRouter = require("./controllers/auth.js");
 const workoutsRouter = require("./controllers/workouts.js");
 const goalsRouter = require("./controllers/goals.js");
+const userRoutes = require("./controllers/user.js");
+
 
 app.use(
   session({
@@ -38,6 +40,7 @@ app.use(isSignedIn);
 
 app.use("/workouts", workoutsRouter);
 app.use("/goals", goalsRouter);
+app.use("/", userRoutes); 
 
 db.on("connected", () => {
   console.clear();

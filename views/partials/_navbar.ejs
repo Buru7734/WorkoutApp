@@ -1,28 +1,51 @@
-<nav>
-  <a href="/">Home</a>
-  <a href="/goals">Goals</a>
-  <% if(user) {%>
-  <a href="/workouts">Workouts</a>
-  <a href="/auth/sign-out">Sign Out</a>
-  <% } else { %>
-  <a href="/auth/sign-in">Sign In</a>
-  <a href="/auth/sign-up">Sign Up</a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="topnav">
+  <nav>
+    <div id="myLinks">
+      <a href="/">Home</a>
+      <a href="/goals">Goals</a>
+      <% if(user) {%>
+      <a href="/workouts">Workouts</a>
+      <a href="/auth/sign-out">Sign Out</a>
+      <a href="/user">Account</a>
+      <% } else { %>
+      <a href="/auth/sign-in">Sign In</a>
+      <a href="/auth/sign-up">Sign Up</a>
 
-  <% } %>
-</nav>
+
+      <% } %>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </nav>
+</div>
+
 <style>
   /* Navbar Styles */
   nav {
     display: flex;
-    justify-content: center; /* center links horizontally */
+    justify-content: center;
+    /* center links horizontally */
     align-items: center;
     background-color: #008cba;
     padding: 15px 20px;
-    gap: 20px; /* space between links */
-    flex-wrap: wrap; /* wrap links on small screens */
+    gap: 20px;
+    /* space between links */
+    flex-wrap: wrap;
+    /* wrap links on small screens */
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
+  }
+
+  #myLinks {
+    display: inline;
+  }
+
+  .icon {
+    display: none;
+    flex-direction: row;
   }
 
   nav a {
@@ -45,16 +68,32 @@
   }
 
   /* Responsive */
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
+    #myLinks {
+      display: none;
+    }
+    .icon {
+      display: block;
+    }
+
     nav {
-      flex-direction: column;
       gap: 10px;
       padding: 10px 15px;
     }
 
     nav a {
       width: 100%;
-      text-align: center;
+      display: block;
     }
   }
 </style>
+<script>
+  function myFunction() {
+    const x = document.getElementById("myLinks");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
+</script>

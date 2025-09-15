@@ -28,4 +28,13 @@ router.delete("/:id", async (req, res) => {
   res.redirect("/goals");
 });
 
+router.post("/index", async (req, res) => {
+  const user = await User.findById(req.session.user._id)
+  const workout = user.goals
+  console.log(workout)
+  workout[0].days.push(req.body)
+  await user.save()
+  
+res.redirect("/goals")
+})
 module.exports = router;
