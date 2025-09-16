@@ -35,21 +35,24 @@
         <option value="6">6</option>
         <option value="7">7</option>
        </select><button id="submitDays" type="submit">Submit</button>
-
+      
       </form>
 
     <%}%>
-
+   
+      
+    <% user.goals.forEach(g => {%>
+      <li><%= g.days %></li>
+      <form id="deleteForm"action="/goals/<%= g._id %>?_method=DELETE" method="POST">
+        <button id="deleteBtn"type="submit">Delete</button>
+      </form>
+      <% })%>
+   
     <ul>
       <% if (user.goals.length === 0){ %>
       <h2>You have no Goals, You Pussy!</h2>
 
-      <%} user.goals.forEach(goal => {%>
-      <li><%= goal.goals %></li>
-      <form id="deleteForm"action="/goals/<%= goal._id %>?_method=DELETE" method="POST">
-        <button id="deleteBtn"type="submit">Delete</button>
-      </form>
-      <% }) %>
+      <%} %>
     </ul>
     <% if (user.goals.length > 0 && user.goals[0].goals === "Get Very Tasty") { %>
     <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">You choose wisely!</p>

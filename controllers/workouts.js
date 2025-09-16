@@ -22,6 +22,7 @@ router.get("/new", (req, res) => {
 //Displays Exercises
 router.get("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
+  console.log("why are the params", req.params)
   const workout = user.workOuts.id(req.params.id);
   res.render("workouts/show.ejs", { user, workout });
 });
@@ -48,6 +49,7 @@ router.post("/", async (req, res) => {
 router.post("/:id", async (req, res) => {
   const user = await User.findById(req.session.user._id);
   const workout = user.workOuts.id(req.params.id);
+  console.log("This what i try to log", req.params)
   workout.exercise.push(req.body);
 
   await user.save();
